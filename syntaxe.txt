@@ -1,0 +1,22 @@
+Syntaxe:
+    <fait>      := <element>
+    <element>   := <mot>
+                := NON <mot>
+    <mot>       := <chaine de char>
+
+    <règle>     := <nom>: <premisse> => <consequent>
+    <premisse>  := <element>
+                := <element>, <premisse>
+    <consequent>:= <premisse>
+
+
+exemple:
+    règles:
+        R1: A => B
+    
+    faits initiaux:
+        A
+        C
+
+    But:
+        B
