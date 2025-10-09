@@ -1,22 +1,28 @@
 Syntaxe:
     <fait>      := <element>
+
     <element>   := <mot>
                 := NON <mot>
+                := <mot> = <valeur>
+
     <mot>       := <chaine de char>
 
     <règle>     := <nom>: <premisse> => <consequent>
+
     <premisse>  := <element>
                 := <element>, <premisse>
+
     <consequent>:= <premisse>
 
 
 exemple:
     règles:
-        R1: A => B
+        R1: D = 2, A => B
     
     faits initiaux:
         A
         C
+        D = 3
 
     But:
         B
