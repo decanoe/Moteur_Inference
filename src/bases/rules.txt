@@ -1,0 +1,27 @@
+tete : animal
+bouche : animal
+yeux : animal
+animal, squelette_interne, crane : vertebre
+vertebre, squelette_os : osteichtyen
+osteichtyen, membre=4 : tetrapode
+tetrapode, gesier : oiseau_ou_croco
+oiseau_ou_croco, plumes : oiseau
+oiseau_ou_croco, trou_os_tempe : crocodilien
+tetrapode, poils, mammelles : mammifere
+tetrapode, carapace : chelonien
+tetrapode, large_machoire : squamate
+tetrapode, doigts=4 : lissamphibien
+osteichtyen, nageoires_a_rayons : actinopterygien
+vertebre, squelette_cartilage : chondrichtyen
+animal, squelette_externe, pattes_articulees : arthropode
+arthropode, antenne>=2, pattes_par_paires, nombreuses_pattes : myriapode
+arthropode, antenne>=2, patte=6, ailes : insecte
+arthropode, patte=8, cheliceres : arachnide
+arthropode, antenne=4, cephalo-thorax : crustace
+animal, coquille : mollusque
+mollusque, tentacules_tete>=6 : cephalopode
+mollusque, parties_de_coquille=2 : bivalve
+mollusque, pied_porteur=1 : gasteropode
+animal, squelette_dans_peau : echinoderme
+animal, harpons_urticans : cnidaire
+animal, corps_anneaux : annelide
