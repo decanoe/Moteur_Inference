@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "fact.h"
+#include "fact/fact.h"
 
 class Rule {
 private:
