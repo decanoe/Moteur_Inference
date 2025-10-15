@@ -2,6 +2,7 @@
 #include <iostream>
 #include <exception>
 
+/// @brief Error to signal a syntax error in given files
 class SyntaxException: public std::exception
 {
 private:
