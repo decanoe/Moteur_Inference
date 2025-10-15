@@ -1,8 +1,9 @@
 #include <iostream>
 #include <vector>
 
-#include "fact_base.h"
 #include "utils/cout.h"
+#include "fact_base.h"
+#include "rule_base.h"
 
 void show_help() {
     std::ostream& c = Cout::out(Cout::Cyan);
@@ -26,10 +27,15 @@ int main(int argc, char *argv[]) {
 
     try
     {
+        RuleBase rule_base = RuleBase();
+        rule_base.add_file(arguments[0]);
+
+        std::cout << "Rules: " << rule_base << "\n";
+
         FactBase fact_base = FactBase();
         fact_base.add_file(arguments[1]);
 
-        std::cout << fact_base << "\n";
+        std::cout << "Facts: " << fact_base << "\n";
     }
     catch(const std::exception& e)
     {
