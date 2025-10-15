@@ -1,0 +1,12 @@
+bool_var
+-neg_bool_var
+
+num_equal = 5.3
+num_not_equal != 1.68
+num_greater > 0.3
+num_greater_equal >= .666
+num_lower < 9.
+num_lower_equal <= 16513.1111
+
+text_equal = bleu
+text_not_equal != rouge

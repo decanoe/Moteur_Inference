@@ -2,7 +2,7 @@ Syntaxe:
     <fait>      := <element>
 
     <element>   := <mot>
-                := NON <mot>
+                := -<mot>
                 := <mot> = <valeur>
 
     <mot>       := <chaine de char>
