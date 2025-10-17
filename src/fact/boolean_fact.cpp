@@ -22,3 +22,9 @@ bool BooleanFact::contradict(const std::shared_ptr<Fact> fact) const {
     const std::shared_ptr<BooleanFact> casted = std::dynamic_pointer_cast<BooleanFact>(fact);
     return casted->get_value() != get_value();
 }
+
+bool BooleanFact::operator==(const Fact& fact) const {
+    return (this->get_type() == fact.get_type() &&
+            this->get_name() == fact.get_name() &&
+            this->value == dynamic_cast<const BooleanFact &>(fact).value);
+}

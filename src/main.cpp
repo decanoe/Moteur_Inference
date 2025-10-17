@@ -4,6 +4,8 @@
 #include "utils/cout.h"
 #include "fact_base.h"
 #include "rule_base.h"
+#include "algos/forwardChaining.h"
+#include "fact/text_fact.h"
 
 void show_help() {
     std::ostream& c = Cout::out(Cout::Cyan);
@@ -27,15 +29,15 @@ int main(int argc, char *argv[]) {
 
     try
     {
-        RuleBase rule_base = RuleBase();
+        RuleBase rule_base;
         rule_base.add_file(arguments[0]);
-
         std::cout << "Rules: " << rule_base << "\n";
-
-        FactBase fact_base = FactBase();
+        FactBase fact_base;
         fact_base.add_file(arguments[1]);
-
         std::cout << "Facts: " << fact_base << "\n";
+        ForwardChaining fc;
+        fc.run(rule_base, fact_base);
+        std::cout << "Inferred Facts: " << fact_base << "\n";
     }
     catch(const std::exception& e)
     {

@@ -28,3 +28,10 @@ bool TextFact::contradict(const std::shared_ptr<Fact> fact) const {
     if (equal) return casted->get_value() == get_value();
     return false;
 }
+
+bool TextFact::operator==(const Fact& fact) const {
+    return (this->get_type() == fact.get_type() &&
+            this->get_name() == fact.get_name() &&
+            this->value == dynamic_cast<const TextFact &>(fact).value &&
+            this->equal == dynamic_cast<const TextFact &>(fact).equal);
+}

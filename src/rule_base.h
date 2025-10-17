@@ -79,9 +79,9 @@ public:
                     if (fact != nullptr) rule->add_antecedent(fact);
                     else throw SyntaxException("Syntax error at line " + std::to_string(line_count) + " of \"" + path + "\": rules cannot contain an empty antecedent");
                 }
-                for (const std::string& antecedent : a_facts)
+                for (const std::string& consequents : c_facts)
                 {
-                    std::shared_ptr<Fact> fact = FactFactory::read_file_fact(antecedent, line_count, path);
+                    std::shared_ptr<Fact> fact = FactFactory::read_file_fact(consequents, line_count, path);
                     if (fact != nullptr) rule->add_consequent(fact);
                     else throw SyntaxException("Syntax error at line " + std::to_string(line_count) + " of \"" + path + "\": rules cannot contain an empty consequent");
                 }

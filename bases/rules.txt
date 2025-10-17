@@ -1,27 +1,27 @@
-tete : animal
-bouche : animal
-yeux : animal
-animal, squelette_interne, crane : vertebre
-vertebre, squelette_os : osteichtyen
-osteichtyen, membre=4 : tetrapode
-tetrapode, gesier : oiseau_ou_croco
-oiseau_ou_croco, plumes : oiseau
-oiseau_ou_croco, trou_os_tempe : crocodilien
-tetrapode, poils, mammelles : mammifere
-tetrapode, carapace : chelonien
-tetrapode, large_machoire : squamate
-tetrapode, doigts=4 : lissamphibien
-osteichtyen, nageoires_a_rayons : actinopterygien
-vertebre, squelette_cartilage : chondrichtyen
-animal, squelette_externe, pattes_articulees : arthropode
-arthropode, antenne>=2, pattes_par_paires, nombreuses_pattes : myriapode
-arthropode, antenne>=2, patte=6, ailes : insecte
-arthropode, patte=8, cheliceres : arachnide
-arthropode, antenne=4, cephalo-thorax : crustace
-animal, coquille : mollusque
-mollusque, tentacules_tete>=6 : cephalopode
-mollusque, parties_de_coquille=2 : bivalve
-mollusque, pied_porteur=1 : gasteropode
-animal, squelette_dans_peau : echinoderme
-animal, harpons_urticans : cnidaire
-animal, corps_anneaux : annelide
+R1: tete => animal
+R2: bouche => animal
+R3: yeux => animal
+R4: animal, squelette_interne, crane => vertebre
+R5: vertebre, squelette_os => osteichtyen
+R6: osteichtyen, membre=4 => tetrapode
+R7: tetrapode, gesier => oiseau_ou_croco
+R8: oiseau_ou_croco, plumes => oiseau
+R9: oiseau_ou_croco, trou_os_tempe => crocodilien
+R10: tetrapode, poils, mammelles => mammifere
+R11: tetrapode, carapace => chelonien
+R12: tetrapode, large_machoire => squamate
+R13: tetrapode, doigts=4 => lissamphibien
+R14: osteichtyen, nageoires_a_rayons => actinopterygien
+R15: vertebre, squelette_cartilage => chondrichtyen
+R16: animal, squelette_externe, pattes_articulees => arthropode
+R17: arthropode, antenne>=2, pattes_par_paires, nombreuses_pattes => myriapode
+R18: arthropode, antenne>=2, patte=6, ailes => insecte
+R19: arthropode, patte=8, cheliceres => arachnide
+R20: arthropode, antenne=4, cephalo_thorax => crustace
+R21: animal, coquille => mollusque
+R22: mollusque, tentacules_tete>=6 => cephalopode
+R23: mollusque, parties_de_coquille=2 => bivalve
+R24: mollusque, pied_porteur=1 => gasteropode
+R25: animal, squelette_dans_peau => echinoderme
+R26: animal, harpons_urticans => cnidaire
+R27: animal, corps_anneaux => annelide

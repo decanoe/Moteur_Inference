@@ -29,4 +29,6 @@ public:
     /// @param fact a shared ptr to the given fact
     /// @return Returns true if the given fact cannot be true at the same time as this one, false else
     virtual bool contradict(const std::shared_ptr<Fact> fact) const override;
+
+    bool operator==(const Fact& fact) const override;
 };
