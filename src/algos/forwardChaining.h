@@ -4,32 +4,42 @@
 class ForwardChaining : public InferenceSolver
 {
 public:
-    void run(RuleBase& rule_base, FactBase& fact_base, std::shared_ptr<Fact> goal) override
+    ForwardChaining(std::shared_ptr<Critere> critere) : InferenceSolver(critere) {}
+
+    void run(RuleBase &rule_base, FactBase &fact_base, std::shared_ptr<Fact> goal) override
     {
         bool butfound = false;
         std::vector<std::shared_ptr<Rule>> rules = rule_base.get_rules();
         bool newFact = false;
-        do {
-            bool newFact = false;
-            for (auto it_rules = rules.begin(); it_rules != rules.end();)
+        do
+        {
+            std::cout << "Starting new iteration of forward chaining...\n";
+            newFact = false;
+            std::vector<std::shared_ptr<Rule>>::iterator rule_to_use = rules.begin();
+            for (auto it_rules = std::next(rules.begin()); it_rules != rules.end(); it_rules++)
             {
-                std::cout << "Trying to apply rule: " << *it_rules << "\n";
-                if ((*it_rules)->update_fact_base(fact_base))
-                {  
-                    std::vector<std::shared_ptr<Fact>> inferred_facts = (*it_rules)->get_consequents();
-                    if (goal->findFact(inferred_facts)) {
-                        butfound = true;
-                        std::cout << "Goal fact found: " << goal << "\n";
-                        break;
+                if ((*it_rules)->ruleValidated(fact_base))
+                {
+                    if (critere->betterThan(*it_rules, *rule_to_use))
+                    {
+                        rule_to_use = it_rules;
+                        std::cout << "Nouvelle meilleure règle: " << **rule_to_use << "\n";
                     }
-                    std::cout<< "Applied rule: " << *it_rules << ", new facts inferred.\n";
-                    newFact = true;
-                    it_rules = rules.erase(it_rules);
-                }
-                else {
-                    ++it_rules;
                 }
             }
+            if ((*rule_to_use)->update_fact_base(fact_base))
+            {
+                std::vector<std::shared_ptr<Fact>> inferred_facts = (*rule_to_use)->get_consequents();
+                if (goal->findFact(inferred_facts))
+                {
+                    butfound = true;
+                    std::cout << "Goal fact found: " << goal << "\n";
+                    break;
+                }
+                std::cout << "Applied rule: " << *rule_to_use << ", new facts inferred.\n";
+                newFact = true;
+                rules.erase(rule_to_use);
+            }
         } while (butfound == false && !rules.empty() && newFact);
-    }
+    } 
 };

@@ -7,6 +7,7 @@
 #include "algos/forwardChaining.h"
 #include "algos/backwardChaining.h"
 #include "fact/boolean_fact.h"
+#include "criteres/maxpremisses.h"
 
 void show_help() {
     std::ostream& c = Cout::out(Cout::Cyan);
@@ -36,7 +37,7 @@ int main(int argc, char *argv[]) {
         FactBase fact_base;
         fact_base.add_file(arguments[1]);
         std::cout << "Facts: " << fact_base << "\n";
-        ForwardChaining fc;
+        ForwardChaining fc = ForwardChaining(std::make_shared<MaxPremisses>());
         fc.run(rule_base, fact_base, std::make_shared<BooleanFact>("crocodilien", true));
         std::cout << "Inferred Facts: " << fact_base << "\n";
     }

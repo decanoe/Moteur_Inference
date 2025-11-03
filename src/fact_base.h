@@ -28,7 +28,7 @@ public:
         facts(facts) {}
     FactBase(const FactBase&) = delete;
     
-    FactBase copy() { return FactBase(facts); }
+    // FactBase copy() { return FactBase(facts); }
 
     FactBase& add_fact(std::shared_ptr<Fact> fact) {
         this->facts.push_back(fact);

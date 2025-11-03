@@ -45,26 +45,37 @@ public:
     }
 
     /**
+     * @brief Checks if all antecedents are validated by the given fact base
+     * @param fact_base the fact base to check against
+     * @return true if all antecedents are validated, false else
+     */
+    bool ruleValidated (FactBase &fact_base) const
+    {
+        for (auto antecedent_ptr : antecedents)
+        {
+            bool validated = false;
+            for (auto fact_ptr : fact_base.get_facts())
+            {
+                if (fact_ptr->validate(antecedent_ptr))
+                {
+                    validated = true;
+                    break;
+                }
+            }
+            if (!validated) return false;
+        }
+        return true;
+    }
+
+    /**
      * @brief Tries to apply the rule to the given fact base, adding new facts if the antecedents are validated
      * @param fact_base the fact base to update
      * @return true if new facts were added, false else
      */
     bool update_fact_base(FactBase &fact_base) const
     {
-        const auto& facts = fact_base.get_facts();
-        for (auto antecedent : antecedents)
-        {
-            bool validated = false;
-            for (auto fact : facts)
-            {
-                if (antecedent->contradict(fact))
-                    return false;
-                if (!validated && fact->validate(antecedent))
-                    validated = true;
-            }
-            if (!validated)
-                return false;
-        }
+        if (!ruleValidated(fact_base))
+            return false;
         for (auto consequent_ptr : consequents)
         {
             if (!fact_base.contains_fact(consequent_ptr)) fact_base.add_fact(consequent_ptr);

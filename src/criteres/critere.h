@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
-#include "rule.h"
+#include "../rule.h"
 
 class Critere {
     private:
     public:
-        virtual int choseRule(std::vector<std::shared_ptr<Rule>> rules) = 0;
-}
+        virtual bool betterThan(std::shared_ptr<Rule> r1, std::shared_ptr<Rule> r2) = 0;
+};
