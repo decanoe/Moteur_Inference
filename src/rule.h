@@ -44,11 +44,6 @@ public:
         return *this;
     }
 
-    const std::vector<std::shared_ptr<Fact>>& get_consequents() const
-    {
-        return consequents;
-    }
-
     /**
      * @brief Tries to apply the rule to the given fact base, adding new facts if the antecedents are validated
      * @param fact_base the fact base to update
