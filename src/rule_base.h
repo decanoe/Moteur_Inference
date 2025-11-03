@@ -29,7 +29,9 @@ public:
         rules() {}
     RuleBase(const std::vector<std::shared_ptr<Rule>>& rules):
         rules(rules) {}
-    RuleBase(const RuleBase& fact) = delete;
+    RuleBase(const RuleBase&) = delete;
+
+    RuleBase copy() { return RuleBase(rules); }
     
     RuleBase& add_rule(std::shared_ptr<Rule> rule) {
         this->rules.push_back(rule);
@@ -93,7 +95,11 @@ public:
 
         return *this;
     }
+    
     const std::vector<std::shared_ptr<Rule>>& get_rules() const { return rules; }
+    std::vector<std::shared_ptr<Rule>>::iterator begin() { return rules.begin(); }
+    std::vector<std::shared_ptr<Rule>>::iterator end() { return rules.end(); }
+    std::vector<std::shared_ptr<Rule>>::iterator remove_rule(std::vector<std::shared_ptr<Rule>>::iterator iterator) { return rules.erase(iterator); }
     
     friend std::ostream& operator<<(std::ostream &os, const RuleBase& fact_base);
 };
