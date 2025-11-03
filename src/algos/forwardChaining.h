@@ -4,8 +4,9 @@
 class ForwardChaining : public InferenceSolver
 {
 public:
-    void run(RuleBase& rule_base, FactBase& fact_base) override
+    void run(RuleBase& rule_base, FactBase& fact_base, std::shared_ptr<Fact> but) override
     {
+        bool butfound = false;
         std::vector<std::shared_ptr<Rule>> rules = rule_base.get_rules();
         bool newFact = false;
         do {
@@ -14,7 +15,13 @@ public:
             {
                 std::cout << "Trying to apply rule: " << *it_rules << "\n";
                 if ((*it_rules)->update_fact_base(fact_base))
-                {
+                {  
+                    std::vector<std::shared_ptr<Fact>> inferred_facts = (*it_rules)->get_consequents();
+                    if (but->findFact(inferred_facts)) {
+                        butfound = true;
+                        std::cout << "Goal fact found: " << but << "\n";
+                        break;
+                    }
                     std::cout<< "Applied rule: " << *it_rules << ", new facts inferred.\n";
                     newFact = true;
                     it_rules = rules.erase(it_rules);
@@ -23,6 +30,6 @@ public:
                     ++it_rules;
                 }
             }
-        } while (!rules.empty() && newFact);
+        } while (butfound == false && !rules.empty() && newFact);
     }
 };

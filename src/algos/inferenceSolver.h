@@ -6,5 +6,5 @@ class InferenceSolver
 {
 public:
     virtual ~InferenceSolver() = default;
-    virtual void run(RuleBase& rule_base, FactBase& fact_base) = 0;
+    virtual void run(RuleBase& rule_base, FactBase& fact_base, std::shared_ptr<Fact> But) = 0;
 };

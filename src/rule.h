@@ -44,6 +44,11 @@ public:
         return *this;
     }
 
+    const std::vector<std::shared_ptr<Fact>>& get_consequents() const
+    {
+        return consequents;
+    }
+
     /**
      * @brief Tries to apply the rule to the given fact base, adding new facts if the antecedents are validated
      * @param fact_base the fact base to update
@@ -68,17 +73,9 @@ public:
         for (auto consequent_ptr : consequents)
         {
             Fact& consequent = *consequent_ptr;
-            bool exists = false;
-            for (auto fact_ptr : facts)
-            {
-                Fact& fact = *fact_ptr;
-                if (consequent==fact) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists)
+            if (!(consequent.findFact(facts))) {
                 fact_base.add_fact(consequent_ptr);
+            }
         }
         return true;
     }
@@ -95,3 +92,4 @@ std::ostream &operator<<(std::ostream &os, const std::shared_ptr<Rule> rule)
 {
     return rule->cout(os);
 }
+

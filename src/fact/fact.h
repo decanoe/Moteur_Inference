@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include <vector>
 
 /// @brief Class that represents a fact (either known or in rule antecedents and consequents)
 class Fact
@@ -34,7 +35,7 @@ public:
     /// @param fact a shared ptr to the given fact
     /// @return Returns true if the given fact cannot be true at the same time as this one, false else
     virtual bool contradict(const std::shared_ptr<Fact> fact) const;
-
+    virtual bool findFact (const std::vector<std::shared_ptr<Fact>>& facts) const;
     virtual bool operator==(const Fact& fact) const = 0;
 
     friend std::ostream& operator<<(std::ostream &os, const Fact& fact);
