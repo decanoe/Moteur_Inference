@@ -67,13 +67,28 @@ public:
         }
         for (auto consequent_ptr : consequents)
         {
-            Fact& consequent = *consequent_ptr;
-            if (!(consequent.findFact(facts))) {
-                fact_base.add_fact(consequent_ptr);
-            }
+            if (!fact_base.contains_fact(consequent_ptr)) fact_base.add_fact(consequent_ptr);
         }
         return true;
     }
+
+    bool contains_antecedent(std::shared_ptr<Fact> fact) {
+        for (auto other : antecedents)
+        {
+            if (*other == *fact) return true;
+        }
+        return false;
+    }
+    bool contains_consequent(std::shared_ptr<Fact> fact) {
+        for (auto other : consequents)
+        {
+            if (*other == *fact) return true;
+        }
+        return false;
+    }
+
+    const std::vector<std::shared_ptr<Fact>>& get_antecedents() const { return antecedents; }
+    const std::vector<std::shared_ptr<Fact>>& get_consequents() const { return consequents; }
 
     friend std::ostream &operator<<(std::ostream &os, const Rule &rule);
     friend std::ostream &operator<<(std::ostream &os, const std::shared_ptr<Rule> rule);

@@ -26,8 +26,10 @@ public:
         facts() {}
     FactBase(const std::vector<std::shared_ptr<Fact>>& facts):
         facts(facts) {}
-    FactBase(const FactBase& fact) = delete;
+    FactBase(const FactBase&) = delete;
     
+    FactBase copy() { return FactBase(facts); }
+
     FactBase& add_fact(std::shared_ptr<Fact> fact) {
         this->facts.push_back(fact);
         return *this;
@@ -50,7 +52,19 @@ public:
 
         return *this;
     }
+    
     const std::vector<std::shared_ptr<Fact>>& get_facts() const { return facts; }
+    std::vector<std::shared_ptr<Fact>>::iterator begin() { return facts.begin(); }
+    std::vector<std::shared_ptr<Fact>>::iterator end() { return facts.end(); }
+    std::vector<std::shared_ptr<Fact>>::iterator remove_rule(std::vector<std::shared_ptr<Fact>>::iterator iterator) { return facts.erase(iterator); }
+
+    bool contains_fact(std::shared_ptr<Fact> fact) {
+        for (auto other : facts)
+        {
+            if (*other == *fact) return true;
+        }
+        return false;
+    }
     
     friend std::ostream& operator<<(std::ostream &os, const FactBase& fact_base);
 };

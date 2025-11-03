@@ -5,7 +5,7 @@
 #include "fact_base.h"
 #include "rule_base.h"
 #include "algos/forwardChaining.h"
-#include "fact/text_fact.h"
+#include "algos/backwardChaining.h"
 #include "fact/boolean_fact.h"
 
 void show_help() {
@@ -37,8 +37,7 @@ int main(int argc, char *argv[]) {
         fact_base.add_file(arguments[1]);
         std::cout << "Facts: " << fact_base << "\n";
         ForwardChaining fc;
-        std::shared_ptr<Fact> goal = std::make_shared<BooleanFact> ("oiseau_ou_croco", true);
-        fc.run(rule_base, fact_base, goal);
+        fc.run(rule_base, fact_base, std::make_shared<BooleanFact>("crocodilien", true));
         std::cout << "Inferred Facts: " << fact_base << "\n";
     }
     catch(const std::exception& e)
