@@ -8,6 +8,7 @@ class BackwardChainingOutput
     {
         std::string text;
         int indent_level;
+        bool last;
     };
     
     std::vector<Line> lines;

@@ -5,8 +5,11 @@
 class BackwardChaining : public InferenceSolver
 {
 public:
+    BackwardChaining(std::shared_ptr<Critere> critere) : InferenceSolver(critere) {}
+
     void run(RuleBase& rule_base, FactBase& fact_base, std::shared_ptr<Fact> goal) override
     {
+        if (goal == nullptr) throw std::invalid_argument("BackwardChaining needs a goal, none was provided !");
         std::cout << demonstrate(goal, rule_base, fact_base);
     }
     BackwardChainingOutput demonstrate(std::shared_ptr<Fact> to_demonstrate, RuleBase& rule_base, FactBase& fact_base, BackwardChainingOutput output = BackwardChainingOutput()) const {
@@ -25,13 +28,18 @@ public:
         
         // search a demo for b
         bool can_ask = true;
+        int index = -1;
         for (auto it_rules = rule_base.begin(); it_rules != rule_base.end(); it_rules++)
         {
+            index++;
             if (!(*it_rules)->contains_consequent(to_demonstrate)) continue;
             can_ask = false;
 
             RuleBase rule_base_copy = rule_base.copy();
+            rule_base_copy.remove_rule(std::next(rule_base_copy.begin(), index));
+
             FactBase fact_base_copy = fact_base.copy();
+            
             BackwardChainingOutput output_copy = BackwardChainingOutput(output);
             std::stringstream ss;
             ss << (*it_rules);
