@@ -23,12 +23,12 @@ public:
             return output;
         }
         
-//         // search a demo for b
-//         bool can_ask = true;
-//         for (auto it_rules = rule_base.begin(); it_rules != rule_base.end(); it_rules++)
-//         {
-//             if (!(*it_rules)->contains_consequent(to_demonstrate)) continue;
-//             can_ask = false;
+        // search a demo for b
+        bool can_ask = true;
+        for (auto it_rules = rule_base.begin(); it_rules != rule_base.end(); it_rules++)
+        {
+            if (!(*it_rules)->contains_consequent(to_demonstrate)) continue;
+            can_ask = false;
 
             RuleBase rule_base_copy = rule_base.copy();
             FactBase fact_base_copy = fact_base.copy();
@@ -54,11 +54,11 @@ public:
             }
         }
         
-//         // ask b
-//         if (can_ask) {
-//             std::cout << "Is this true ? (y/n/?) " << to_demonstrate << "\n";
-//             char c;
-//             std::cin >> c;
+        // ask b
+        if (can_ask) {
+            std::cout << "Is this true ? (y/n/?) " << to_demonstrate << "\n";
+            char c;
+            std::cin >> c;
 
             if (c == 'y') {
                 fact_base.add_fact(to_demonstrate);
