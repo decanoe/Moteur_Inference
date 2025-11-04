@@ -26,7 +26,6 @@ public:
         facts() {}
     FactBase(const std::vector<std::shared_ptr<Fact>>& facts):
         facts(facts) {}
-    FactBase(const FactBase&) = delete;
     
     FactBase copy() { return FactBase(facts); }
 

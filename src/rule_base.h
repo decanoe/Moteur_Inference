@@ -29,7 +29,6 @@ public:
         rules() {}
     RuleBase(const std::vector<std::shared_ptr<Rule>>& rules):
         rules(rules) {}
-    RuleBase(const RuleBase&) = delete;
 
     RuleBase copy() { return RuleBase(rules); }
     
