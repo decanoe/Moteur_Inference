@@ -12,6 +12,19 @@ public:
         if (goal == nullptr) throw std::invalid_argument("BackwardChaining needs a goal, none was provided !");
         std::cout << demonstrate(goal, rule_base, fact_base);
     }
+
+    std::vector<std::shared_ptr<Rule>>::iterator get_rule_to_check(std::shared_ptr<Fact> to_demonstrate, RuleBase& rule_base, FactBase& fact_base) const {
+        std::vector<std::shared_ptr<Rule>>::iterator best = rule_base.end();
+
+        for (auto it_rules = rule_base.begin(); it_rules != rule_base.end(); it_rules++)
+        {
+            if (!(*it_rules)->contains_consequent(to_demonstrate)) continue;
+            
+            if (best == rule_base.end()) best = it_rules;
+            else if (critere->betterThan(*it_rules, *best, fact_base)) best = it_rules;
+        }
+        return best;
+    }
     BackwardChainingOutput demonstrate(std::shared_ptr<Fact> to_demonstrate, RuleBase& rule_base, FactBase& fact_base, BackwardChainingOutput output = BackwardChainingOutput()) const {
         // fact already in fact_base
         if (fact_base.contains_fact(to_demonstrate)) {
@@ -28,25 +41,25 @@ public:
         
         // search a demo for b
         bool can_ask = true;
-        int index = -1;
-        for (auto it_rules = rule_base.begin(); it_rules != rule_base.end(); it_rules++)
+        while (true)
         {
-            index++;
-            if (!(*it_rules)->contains_consequent(to_demonstrate)) continue;
+            auto rule_iter = get_rule_to_check(to_demonstrate, rule_base, fact_base);
+            if (rule_iter == rule_base.end()) break;
             can_ask = false;
 
-            RuleBase rule_base_copy = rule_base.copy();
-            rule_base_copy.remove_rule(std::next(rule_base_copy.begin(), index));
+            std::shared_ptr<Rule> rule = *rule_iter;
+            rule_base.remove_rule(rule_iter);
 
+            RuleBase rule_base_copy = rule_base.copy();
             FactBase fact_base_copy = fact_base.copy();
             
             BackwardChainingOutput output_copy = BackwardChainingOutput(output);
             std::stringstream ss;
-            ss << (*it_rules);
+            ss << rule;
             output_copy.add(ss.str());
 
             bool end = true;
-            for (auto fact : (*it_rules)->get_antecedents()) {
+            for (auto fact : rule->get_antecedents()) {
                 output_copy.indent();
                 output_copy = demonstrate(fact, rule_base_copy, fact_base_copy, output_copy);
                 if (!output_copy) {

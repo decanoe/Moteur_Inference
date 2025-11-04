@@ -60,7 +60,7 @@ public:
     bool contains_fact(std::shared_ptr<Fact> fact) {
         for (auto other : facts)
         {
-            if (*other == *fact) return true;
+            if (other->validate(fact)) return true;
         }
         return false;
     }
