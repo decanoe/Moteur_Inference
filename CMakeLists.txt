@@ -14,6 +14,6 @@ add_executable(moteur_inference
     src/utils/fact_factory.cpp
     src/utils/cout.cpp
 
-    # src/rule.cpp
+    src/algos/backwardChainingOutput.cpp
 )
 target_compile_features(moteur_inference PRIVATE cxx_std_17)
