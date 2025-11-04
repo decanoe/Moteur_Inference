@@ -9,6 +9,7 @@
 #include "algos/backwardChaining.h"
 #include "fact/boolean_fact.h"
 #include "criteres/maxpremisses.h"
+#include "criteres/recentpremisses.h"
 
 void show_help() {
     std::ostream& c = Cout::out(Cout::Cyan);
@@ -53,6 +54,11 @@ int main(int argc, char *argv[]) {
             else { Cout::endl(Cout::err() << "Two criterias are specified !"); return 1; }
         }
 
+        else if ((*iter) == "-recent_premisses") {
+            if (criteria_param == "None") criteria_param = "recent_premisses";
+            else { Cout::endl(Cout::err() << "Two criterias are specified !"); return 1; }
+        }
+
         else if ((*iter) == "-g" || (*iter) == "-goal") {
             std::string arg = (*iter);
             iter++;
@@ -82,8 +88,9 @@ int main(int argc, char *argv[]) {
         fact_base.add_file(arguments[1]);
 
         std::shared_ptr<Critere> criteria;
-        if (criteria_param == "None") criteria = std::make_shared<MaxPremisses>();
+        if (criteria_param == "None") criteria = std::make_shared<Critere>();
         else if (criteria_param == "max_premisses") criteria = std::make_shared<MaxPremisses>();
+        else if (criteria_param == "recent_premisses") criteria = std::make_shared<RecentPremisses>();
 
         std::shared_ptr<InferenceSolver> solver;
         if (algo_param == "fc") solver = std::make_shared<ForwardChaining>(criteria);

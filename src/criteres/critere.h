@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "../rule.h"
 
 class Critere {
@@ -12,7 +13,11 @@ class Critere {
          * @param r2 the second rule
          * @return true if r2 is better than r1 according to the criterion, false otherwise
          */
-        virtual bool betterThan(std::shared_ptr<Rule> r1, std::shared_ptr<Rule> r2) {
+        virtual bool betterThan(std::shared_ptr<Rule> r1, std::shared_ptr<Rule> r2, FactBase& factbase) {
             return false;
         };
+
+        virtual std::string toString() const {
+            return "No criterion";
+        }
 };
