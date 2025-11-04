@@ -28,13 +28,12 @@ public:
             }
             if ((*rule_to_use)->update_fact_base(fact_base))
             {
-                std::vector<std::shared_ptr<Fact>> inferred_facts = (*rule_to_use)->get_consequents();
-                if (goal != nullptr && goal->findFact(inferred_facts))
+                std::cout << "Applied rule: " << *rule_to_use << ", new facts inferred.\n";
+                if (goal != nullptr && (*rule_to_use)->contains_consequent(goal))
                 {
                     std::cout << "Goal fact found: " << goal << "\n";
                     break;
                 }
-                std::cout << "Applied rule: " << *rule_to_use << ", new facts inferred.\n";
                 newFact = true;
                 rules.erase(rule_to_use);
             }
