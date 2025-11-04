@@ -8,7 +8,6 @@ public:
 
     void run(RuleBase &rule_base, FactBase &fact_base, std::shared_ptr<Fact> goal) override
     {
-        bool butfound = false;
         std::vector<std::shared_ptr<Rule>> rules = rule_base.get_rules();
         bool newFact = false;
         do
@@ -30,9 +29,8 @@ public:
             if ((*rule_to_use)->update_fact_base(fact_base))
             {
                 std::vector<std::shared_ptr<Fact>> inferred_facts = (*rule_to_use)->get_consequents();
-                if (goal->findFact(inferred_facts))
+                if (goal != nullptr && goal->findFact(inferred_facts))
                 {
-                    butfound = true;
                     std::cout << "Goal fact found: " << goal << "\n";
                     break;
                 }
@@ -40,6 +38,6 @@ public:
                 newFact = true;
                 rules.erase(rule_to_use);
             }
-        } while (butfound == false && !rules.empty() && newFact);
+        } while (!rules.empty() && newFact);
     } 
 };

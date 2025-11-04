@@ -31,7 +31,7 @@ public:
         rules(rules) {}
     RuleBase(const RuleBase&) = delete;
 
-    // RuleBase copy() { return RuleBase(rules); }
+    RuleBase copy() { return RuleBase(rules); }
     
     RuleBase& add_rule(std::shared_ptr<Rule> rule) {
         this->rules.push_back(rule);
