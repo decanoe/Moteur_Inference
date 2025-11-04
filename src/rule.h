@@ -86,14 +86,14 @@ public:
     bool contains_antecedent(std::shared_ptr<Fact> fact) {
         for (auto other : antecedents)
         {
-            if (*other == *fact) return true;
+            if (other->validate(fact)) return true;
         }
         return false;
     }
     bool contains_consequent(std::shared_ptr<Fact> fact) {
         for (auto other : consequents)
         {
-            if (*other == *fact) return true;
+            if (other->validate(fact)) return true;
         }
         return false;
     }

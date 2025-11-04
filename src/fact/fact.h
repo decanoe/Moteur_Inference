@@ -35,9 +35,8 @@ public:
     /// @param fact a shared ptr to the given fact
     /// @return Returns true if the given fact cannot be true at the same time as this one, false else
     virtual bool contradict(const std::shared_ptr<Fact> fact) const;
-    virtual bool findFact (const std::vector<std::shared_ptr<Fact>>& facts) const;
+    
     virtual bool operator==(const Fact& fact) const = 0;
-
     friend std::ostream& operator<<(std::ostream &os, const Fact& fact);
     friend std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Fact> fact);
 };
