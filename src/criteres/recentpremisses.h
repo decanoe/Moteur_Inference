@@ -25,7 +25,6 @@ public:
                 }
             }
         }
-        std::cout << "Score pour la regle " << *r << " : " << score << std::endl;
         return score;
     }
 

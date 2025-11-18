@@ -19,7 +19,8 @@ void show_help() {
     c << "\t-help or -h\tto access this text\n";
     c << "\t-f or -fc\tto use forward chaining\n";
     c << "\t-b or -bc\tto use backward chaining\n";
-    c << "\t-max_premisses\tto use the max premisses criteria\n";
+    c << "\t-max_premisses\tto use the max premisses criteria to chose rules to apply\n";
+    c << "\t-recent_premisses\tto use the recent premisses criteria to chose rules to apply\n";
     c << "\t-g <fact> or -goal <fact>\tto specify a goal\n";
     Cout::end(c);
 }
@@ -53,7 +54,6 @@ int main(int argc, char *argv[]) {
             if (criteria_param == "None") criteria_param = "max_premisses";
             else { Cout::endl(Cout::err() << "Two criterias are specified !"); return 1; }
         }
-
         else if ((*iter) == "-recent_premisses") {
             if (criteria_param == "None") criteria_param = "recent_premisses";
             else { Cout::endl(Cout::err() << "Two criterias are specified !"); return 1; }
