@@ -99,6 +99,8 @@ public:
     std::vector<std::shared_ptr<Rule>>::iterator begin() { return rules.begin(); }
     std::vector<std::shared_ptr<Rule>>::iterator end() { return rules.end(); }
     std::vector<std::shared_ptr<Rule>>::iterator remove_rule(std::vector<std::shared_ptr<Rule>>::iterator iterator) { return rules.erase(iterator); }
+
+    bool empty() { return rules.empty(); }
     
     friend std::ostream& operator<<(std::ostream &os, const RuleBase& fact_base);
 };
