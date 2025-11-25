@@ -33,6 +33,18 @@ public:
         this->facts.push_back(fact);
         return *this;
     }
+    
+    bool checkFactConsistency (std::shared_ptr<Fact> fact) {
+        for (auto other : facts)
+        {
+            if (other->contradict(fact)) {
+                std::cout<< "Le fait : " << fact << " est incohérent avec " << other << "\n";
+                return false;
+            }
+        }
+        return true;
+    }
+
     FactBase& add_file(const std::string& path) {
         std::ifstream file(path);
         if (!file.is_open()) {
@@ -45,7 +57,10 @@ public:
         {
             line_count++;
             std::shared_ptr<Fact> fact = FactFactory::read_file_fact(line, line_count, path);
-            if (fact != nullptr) add_fact(fact);
+            if (fact != nullptr) {
+                checkFactConsistency(fact);
+                add_fact(fact);
+            } 
         }
         file.close();
 

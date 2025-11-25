@@ -1,6 +1,7 @@
 tete
 bouche
 yeux
+membre=6
 squelette_interne
 crane
 squelette_os
