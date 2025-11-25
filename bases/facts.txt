@@ -5,6 +5,5 @@ membre=6
 squelette_interne
 crane
 squelette_os
-membre=4
 gesier
 trou_os_tempe

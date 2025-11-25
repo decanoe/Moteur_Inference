@@ -38,7 +38,9 @@ public:
         for (auto other : facts)
         {
             if (other->contradict(fact)) {
-                std::cout<< "Le fait : " << fact << " est incohérent avec " << other << "\n";
+                std::ostream& c = Cout::out(Cout::Yellow);
+                c << "Consistency Warning:\n\tfact \t\"" << fact << "\"\n\tis inconsistent with fact\t\"" << other << "\"";
+                Cout::endl(c);
                 return false;
             }
         }
