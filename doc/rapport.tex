@@ -1,4 +1,6 @@
 \documentclass{article}
+\usepackage[cyr]{aeguill}
+\usepackage[francais]{babel}
 \usepackage{mathtools, stmaryrd}
 \usepackage{xparse}
 \usepackage{amsmath}
@@ -19,12 +21,13 @@
 
 \begin{document}
 \maketitle
-\tableofcontents
 
 \begin{abstract}
     L'objectif de ce projet est de programmer un moteur d'inférence d'ordre Zéro+ au minimum adapté à un système expert de notre choix.
     Ce moteur d'inférence doit pouvoir être utilisé pour d'autres applications similaires à celle pour laquelle il a été créé. 
 \end{abstract}
+\tableofcontents
+\pagebreak
 
 % #region ================ Système expert ===================
 \section{Système expert}
@@ -32,8 +35,6 @@ Afin de disposer rapidement d'une base pour commencer l'implémentation du moteu
 vers une application de classement d'espèces animales. L'application prendra une description complète ou non des caractéristiques d'un animal
 (nombre de membres, squelette, poils, \dots) et en déduira l'espèce ou la famille de l'animal (gastéropode, insecte, arachnide, \dots).
 % #endregion
-
-\pagebreak
 
 % #region ================ Syntaxe ===================
 \section{Syntaxe}
@@ -150,7 +151,7 @@ vrai, faux ou indéterminé.
 \\
 
 Exemple de sortie pour la commande
-\shellcmd{./moteur\_inference ../bases/rules.txt ../bases/facts.txt -bc -g ``crocodilien''}
+\shellcmd{./moteur\_inference ../bases/rules.txt ../bases/facts.txt -bc -g crocodilien}
 \vspace{-4ex}
 \begin{framed}
 \vspace{-2ex}
@@ -207,6 +208,57 @@ les indices les plus grands).
 
 \pagebreak
 \section{Contraintes de l'implémentation sur le langage}
+L'utilisation des faits arithmétiques dans notre moteur nous a forcé à réaliser des choix d'implémentation ne
+permettant pas l'utilisation de variables multivaluées.
+Il est aussi impossible d'affecter à une variable une autre variable (ou de comparer des variables pour la même raison).
 
+\section{Cohérence}
+% #region ================ Cohérence des faits ===================
+\subsection{Cohérence des faits}
+La cohérence de la base de faits est réalisée à l'importation de celle-ci. Toute contradiction est renseignée dans la console sous forme de warning.\\
+
+Exemple de contradiction de règles :
+\vspace{-2ex}
+\begin{framed}
+\vspace{-2ex}
+\begin{verbatim}
+Consistency Warning:
+        fact    "membre > 6"
+        is inconsistent with fact       "membre = 6"
+\end{verbatim}
+\vspace{-2ex}
+\end{framed}
+% #endregion
+
+% #region ================ Cohérence des règles ===================
+\subsection{Cohérence des règles}
+La cohérence de la base de règles est aussi réalisée à l'importation.
+Les cohérences entre des règles sont testées uniquement 2 à 2.
+Les règles ayant un conséquent en contradiction avec une prémisse sont aussi relevées.\\
+
+Exemple de contradiction entre 2 règles :
+\vspace{-2ex}
+\begin{framed}
+\vspace{-2ex}
+\begin{verbatim}
+Consistency Warning:
+        rule    "T1: T = eleve, P = haha => V = rapide" 
+        leads to        "T1: T = eleve => V = lent"
+\end{verbatim}
+\vspace{-2ex}
+\end{framed}
+
+Exemple de contradiction dans une règle :
+\vspace{-2ex}
+\begin{framed}
+\vspace{-2ex}
+\begin{verbatim}
+Consistency Warning:
+        "A > 3"  contradicts    "A < 1"
+        in rule "R3: A > 3 => "A < 1"
+\end{verbatim}
+\vspace{-2ex}
+\end{framed}
+% #endregion
 
 \end{document}
