@@ -51,10 +51,10 @@ d'un symbole arithmétique ou d'affectation et d'une valeur (valeur numérique o
     \item \makebox[5cm][l]{nom\_de\_variable != rouge} pour une inégalité de variable textuelle
 \end{itemize}
 
-Les règles seront quant à elles composés d'un nom de règle, d'une liste de faits représentant les prémisses et d'une autre représentant les conséquents. Par exemple :
+Les règles seront quant à elles composés d'un nom de règle, d'une liste de faits représentant les prémisses et d'une autre liste représentant les conséquents. Par exemple :
 \begin{itemize}
-    \item R1: A =\> B \\\makebox[1cm][l]{} une règle avec 1 prémisse booléenne et 1 conséquent booléen
-    \item R2: A, B = 3, H =\> B $>$ 2, D $<$ 2 \\\makebox[1cm][l]{} une règle avec 3 prémisses et 2 conséquents
+    \item R1: A =$>$ B \\\makebox[1cm][l]{} une règle avec 1 prémisse booléenne et 1 conséquent booléen
+    \item R2: A, B = 3, H =$>$ B $>$ 2, D $<$ 2 \\\makebox[1cm][l]{} une règle avec 3 prémisses et 2 conséquents
 \end{itemize}
 
 Une base de faits et une base de règles d'exemple sont disponibles dans le dossier $bases$ du répertoire du projet.
@@ -196,7 +196,7 @@ seront testés en premier. Si plusieurs règles peuvent être appliquées et ont
 sera sélectionnée.
 % #endregion
 % #region ================ recent_premisses ===================
-\subsection{Nombre de prémisses}
+\subsection{Prémisses récentes}
 Le critère des prémisses les plus récentes peut être activé avec l'option -recent\_premisses. Les règles utilisant les faits les plus récemment ajoutés dans
 la base de faits seront testés en premier. Tout comme le critère du nombre de prémisses, en cas d'égalité, la première règle concernée dans l'ordre de la
 base de règles sera sélectionnée.

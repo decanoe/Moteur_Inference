@@ -3,6 +3,7 @@
 #include <vector>
 #include "fact/fact.h"
 #include "fact_base.h"
+#include "utils/cout.h"
 
 class Rule
 {
@@ -42,6 +43,41 @@ public:
     {
         this->consequents.push_back(fact);
         return *this;
+    }
+
+    bool CheckConsistency() const {
+        bool state = true;
+        for (std::shared_ptr<Fact> antecedent : antecedents)
+        {
+            for (std::shared_ptr<Fact> consequent : consequents)
+            {
+                if (consequent->contradict(antecedent)) {
+                    std::ostream& c = Cout::out(Cout::Yellow);
+                    c << "Consistency Warning:\n\t\"" << consequent << "\"\t contradicts \t\"" << antecedent << "\"\n\tin rule \"" << *this << "\"";
+                    Cout::endl(c);
+                    state = false;
+                }
+            }
+        }
+        return state;
+    }
+    bool LeadsTo(std::shared_ptr<Rule> rule) const {
+        for (std::shared_ptr<Fact> target_antecedant : rule->get_antecedents())
+        {
+            bool validated = false;
+            for (std::shared_ptr<Fact> antecedant : get_antecedents())
+            {
+                if (validated) break;
+                validated |= antecedant->validate(target_antecedant);
+            }
+            for (std::shared_ptr<Fact> consequent : get_consequents())
+            {
+                if (validated) break;
+                validated |= consequent->validate(target_antecedant);
+            }
+            if (!validated) return false;
+        }
+        return true;
     }
 
     /**

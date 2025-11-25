@@ -32,7 +32,56 @@ public:
 
     RuleBase copy() { return RuleBase(rules); }
     
+    bool CheckConsistency(std::shared_ptr<Rule> rule) {
+        if (!rule->CheckConsistency()) return false;
+
+        for (std::shared_ptr<Rule> r : rules) {
+            bool s1 = true, s2 = true;
+            
+            bool can_contradict = false;
+            for (std::shared_ptr<Fact> consequent_1 : rule->get_consequents()) {
+                for (std::shared_ptr<Fact> consequent_2 : r->get_consequents())
+                {
+                    if (can_contradict) break;
+                    can_contradict |= consequent_1->contradict(consequent_2);
+                }
+                for (std::shared_ptr<Fact> antecedant_2 : r->get_antecedents())
+                {
+                    if (can_contradict) break;
+                    can_contradict |= consequent_1->contradict(antecedant_2);
+                }
+            }
+            for (std::shared_ptr<Fact> consequent_2 : r->get_consequents()) {
+                for (std::shared_ptr<Fact> consequent_1 : rule->get_consequents())
+                {
+                    if (can_contradict) break;
+                    can_contradict |= consequent_2->contradict(consequent_1);
+                }
+                for (std::shared_ptr<Fact> antecedant_1 : rule->get_antecedents())
+                {
+                    if (can_contradict) break;
+                    can_contradict |= consequent_2->contradict(antecedant_1);
+                }
+            }
+            if (!can_contradict) continue;
+            
+            if (rule->LeadsTo(r)) {
+                std::ostream& c = Cout::out(Cout::Yellow);
+                c << "Consistency Warning:\n\trule \t\"" << rule << "\"\n\tleads to\t\"" << r << "\"";
+                Cout::endl(c);
+                return false;
+            }
+            if (r->LeadsTo(rule)) {
+                std::ostream& c = Cout::out(Cout::Yellow);
+                c << "Consistency Warning:\n\trule \t\"" << r << "\"\n\tleads to\t\"" << rule << "\"";
+                Cout::endl(c);
+                return false;
+            }
+        }
+        return true;
+    }
     RuleBase& add_rule(std::shared_ptr<Rule> rule) {
+        CheckConsistency(rule);
         this->rules.push_back(rule);
         return *this;
     }
